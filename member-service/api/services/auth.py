@@ -11,22 +11,42 @@ from api.models import member as sqlm
 SALT = bcrypt.gensalt()
 
 # 토큰생성시 사용할 비밀키
-SECRETKEY = 'secretkeyformakingtoken'
+SECRETKEY = 'git6a'
 
 
 # 회원가입 처리
-def register(db: Session, user: pym.UserCreate ):
-    hashed_passwd = (bcrypt.hashpw(user.mpwd.encode('utf-8'), SALT))
+# def register(db: Session, user: pym.UserCreate ):
+#     hashed_passwd = (bcrypt.hashpw(user.mpwd.encode('utf-8'), SALT))
+#     print(hashed_passwd)
+#
+#     user = sqlm.Member(**user.model_dump())
+#     user.passwd = hashed_passwd #암호화된패스워드
+#     user.regdate = datetime.now().isoformat(' ', 'seconds')
+#     # seconds 부분을 ''빈칸으로 바꾼다는 뜻
+#     db.add(user)
+#     db.commit()
+#     db.refresh(user)
+#     return pym.User.from_orm(user)
+
+def register(db: Session, user: pym.UserCreate):
+    hashed_passwd = bcrypt.hashpw(user.mpwd.encode('utf-8'), SALT)
     print(hashed_passwd)
 
-    user = sqlm.Member(**user.model_dump())
-    user.passwd = hashed_passwd #암호화된패스워드
-    user.regdate = datetime.now().isoformat(' ', 'seconds')
-    # seconds 부분을 ''빈칸으로 바꾼다는 뜻
-    db.add(user)
+    # model_dump에서 반환된 딕셔너리에서 'mpwd' 키를 제거
+    user_data = user.model_dump()
+    user_data.pop('mpwd', None)  # 'mpwd' 키가 있으면 제거
+
+    # Member 객체 생성 시 mpwd 필드에 해시된 비밀번호를 명시적으로 설정
+    member = sqlm.Member(**user_data, mpwd=hashed_passwd)
+    member.regdate = datetime.now().isoformat(' ', 'seconds')
+
+    db.add(member)
     db.commit()
-    db.refresh(user)
-    return pym.User.from_orm(user)
+    db.refresh(member)
+    return pym.User.from_orm(member)
+
+
+
 
 # 엑세스 토큰 생성
 # JWT : JSON Web Token
