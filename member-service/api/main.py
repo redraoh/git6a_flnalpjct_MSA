@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 import database as sess
+# from routes import member
 from api.routes import member
 
 
