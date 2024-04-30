@@ -1,45 +1,37 @@
 const loginfrm = document.querySelector('#loginfrm');
 const userid = document.querySelector('#userid');
 const passwd = document.querySelector('#passwd');
-// const userid = document.getElementById('userid'); // 수정된 부분
-// const passwd = document.getElementById('passwd'); // 수정된 부분
 const loginbtn = document.querySelector('#loginbtn');
 
 // 로그인버튼 이벤트 추가
-loginbtn.addEventListener('click', async () => {
-    const res = await fetch('http://127.0.0.1:8020/login',
-        {
+loginbtn.addEventListener('click', async (e) => {
+    e.preventDefault(); // 폼의 기본 제출 행동을 막습니다.
+
+    // 입력 값 검증
+    if (!userid.value.trim() || !passwd.value.trim()) {
+        alert('ID와 비밀번호를 입력하세요.');
+        return; // 입력이 비어있으면 여기서 함수 실행을 중단
+    }
+
+    try {
+        const res = await fetch('http://127.0.0.1:8020/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                mid: userid.value, // 수정된 부분
-                mpwd: passwd.value // 수정된 부분
+                mid: userid.value,
+                mpwd: passwd.value
             })
         });
-    const data = await res.json();
-    if (res.ok) {
-        alert('로그인 성공!!');
-    } else {
-        alert('로그인 실패!!');
-        console.log(data.detail);
+        const data = await res.json();
+
+        if (res.ok) {
+            alert('로그인 성공!!');
+        } else {
+            alert('로그인에 실패하였습니다. 아이디 혹은 비밀번호를 확인하세요.');
+            console.log(data.detail || data.message); // 실패 이유 출력
+        }
+    } catch (error) {
+        console.error('서버와의 통신 중 문제가 발생했습니다.', error);
+        alert('서버와의 통신 중 문제가 발생했습니다.');
     }
 });
-
-// loginbtn.addEventListener('click', async () => {
-//     const res = await fetch('http://127.0.0.1:8020/login', {
-//         method: 'POST',
-//         headers: {'Content-Type': 'application/json'},
-//         body: JSON.stringify({
-//             mid: userid.value,
-//             mpwd: passwd.value
-//         })
-//     });
-//     if (res.ok) {
-//         const data = await res.json();
-//         alert('로그인 성공!!');
-//     } else {
-//         const errorData = await res.json();
-//         alert('로그인 실패!!');
-//         console.log(errorData.detail);
-//     }
-// });
