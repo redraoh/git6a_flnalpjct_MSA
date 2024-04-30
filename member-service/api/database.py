@@ -1,7 +1,7 @@
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
-from sqlmodels import Base
+from api.models.member import Base
 
 db_url = 'sqlite:///members.db'
 
