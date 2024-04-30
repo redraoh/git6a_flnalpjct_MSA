@@ -28,4 +28,6 @@ class Member(Base):
     mpwd = Column(String(128), nullable=False)
     mname = Column(String(20), nullable=False)
     pname = Column(String(40), nullable=False)
-    regdate = Column(String(20), default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    #regdate = Column(String(20), default=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    regdate = Column(String(20))
+

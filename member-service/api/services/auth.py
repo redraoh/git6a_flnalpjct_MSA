@@ -4,8 +4,8 @@ from typing import Optional
 import bcrypt, jwt
 from sqlalchemy.orm import Session
 
-import pymodels as pym
-import sqlmodels as sqlm
+from api.schema import member as pym
+from api.models import member as sqlm
 
 # 비밀번호 해싱을 위한 솔트값 정의
 SALT = bcrypt.gensalt()
@@ -20,7 +20,9 @@ def register(db: Session, user: pym.UserCreate ):
     print(hashed_passwd)
 
     user = sqlm.Member(**user.model_dump())
-    user.mpwd = hashed_passwd #암호화된패스워드
+    user.passwd = hashed_passwd #암호화된패스워드
+    user.regdate = datetime.now().isoformat(' ', 'seconds')
+    # seconds 부분을 ''빈칸으로 바꾼다는 뜻
     db.add(user)
     db.commit()
     db.refresh(user)
