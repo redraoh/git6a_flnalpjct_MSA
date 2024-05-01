@@ -6,7 +6,7 @@ const PageButton1 = document.getElementById('discountPage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton1.addEventListener('click', function() {
     // 페이지를 사용내역 페이지로 리디렉션합니다.
-    window.location.href = './discount';
+    window.location.href = '/discount.html';
 })
 
 // 시간대검색 페이지
@@ -36,15 +36,18 @@ PageButton4.addEventListener('click', function() {
     window.location.href = './summary';
 })
 
-// 로그아웃
+// 로그아웃 리디렉션
 const logoutButton = document.getElementById('logOut');
 
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 logoutButton.addEventListener('click', function() {
     // 페이지를 사용내역 페이지로 리디렉션합니다.
     //window.location.href = './logout';
-    window.location.href = '../login.html';
+    localStorage.removeItem('token');
+    //location.href = '/user.html';
+    window.location.href = '/login.html';
 })
+
 
 // 회원정보수정 페이지
 const mypageButton = document.getElementById('summaryPage');
