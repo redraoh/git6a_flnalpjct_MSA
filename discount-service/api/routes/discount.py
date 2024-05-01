@@ -21,7 +21,7 @@ async def on_startup():
 
 @car_router.get('/discount', response_class=HTMLResponse)
 def cars(request: Request):
-    return templates.TemplateResponse('discount_car.html', {'request': request, 'cars': cars})
+    return templates.TemplateResponse('discount.html', {'request': request, 'cars': cars})
 
 
 @car_router.get("/discount/{cno}", response_model=List[Car])
