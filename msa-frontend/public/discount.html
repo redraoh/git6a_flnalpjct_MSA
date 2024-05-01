@@ -195,13 +195,14 @@
                                     <td class="border px-4 py-2" id="entName">입구명 정보</td>
                                 </tr>
                             </table>
-                            <div class="flex space-x-2">
+                            <div class="flex flex-col space-y-2">
                                 <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="applyDiscount('1시간 무료')">1시간 무료</button>
                                 <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="applyDiscount('2시간 무료')">2시간 무료</button>
                                 <button class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="applyDiscount('완전 무료')">완전 무료</button>
                                 <button class="selected-discount" id="selectedDiscountBtn">선택된 할인권: </button>
-
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onclick="submitDiscount()">적용</button>
                             </div>
+
                         </div>
                         <div class="number-container">
                             <div class="container mx-auto px-4">
@@ -228,6 +229,8 @@
                     </div>
                 </div>
             </div>
+
+
         </main>
 </div>
 
