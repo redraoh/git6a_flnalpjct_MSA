@@ -13,6 +13,7 @@ document.getElementById('dateInput').max = nowdt;
 
 let tablemt = document.querySelector('.tablemth');
 let tabledt = document.querySelector('.tabledt');
+let cpschbtn = document.querySelector('#cpschbtn');
 
 
 // 라디오 버튼 클릭 이벤트 리스너 추가
@@ -34,6 +35,31 @@ const getCouponInfo = async () => {
         return aldata;
     } else {
         throw new Error('전체 할인권 정보 조회 실패!');
+    }
+};
+
+// 할인권 전체 검색 조회
+const findCouponInfo = async (skey) => {
+    const alres = await fetch(`http://127.0.0.1:8040/cpfind/${skey}`)
+    if (alres.ok) {
+        const aldata = await alres.json()
+        console.log(aldata);
+        return aldata;
+    } else {
+        throw new Error('전체 할인권 정보 검색 조회 실패!');
+    }
+};
+
+// 할인권 첫페이지 검색 조회
+const findCouponInfoPage = async (skey, idx) => {
+    if (idx === undefined || idx === null) idx = 1;
+    const res = await fetch(`http://127.0.0.1:8040/cpfind/${skey}/${idx}`)
+    if (res.ok) {
+        const data = await res.json()
+        //console.log(data);
+        return data;
+    } else {
+        throw new Error('첫페이지 할인권 정보 조회 실패!');
     }
 };
 
@@ -89,7 +115,7 @@ const displayCouponInfo = (coupons) => {
 let cpg = 1;
 
 // nav test
-const displayNavigation = async (alcps) => {
+const displayNavigation = (alcps) => {
     const navuilist = document.querySelector('#navui');
 
     let stpg = Math.floor((cpg - 1) / 10) * 10 + 1;
@@ -101,9 +127,10 @@ const displayNavigation = async (alcps) => {
         html = `
             <li class="${cpg === 1 ? 'disabled' : ''}">
                 <a
+                    id="prevpgbtn"
                     class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pl-2.5"
                     aria-label="Go to previous page"
-                    ${cpg === 1 ? 'disabled' : `href="javascript:ad(${cpg - 1})"`}
+                    ${cpg === 1 ? 'disabled' : `href="javascript:onPaginationClick(${cpg - 1})"`}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -126,9 +153,11 @@ const displayNavigation = async (alcps) => {
         for (let i = stpg; i < stpg + 10; i++) {
             if (i <= allpage) {
                 html += `
-                        <li id="li${i}" class="${cpg === i ? 'page-item active text-[#0075C9]' : ''}">
-                            <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
-                               href="javascript:ad(${i})">${i}</a>
+                        <li class="${cpg === i ? 'page-item active text-[#0075C9]' : ''}">
+                            <a 
+                                id="li${i}"
+                                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                                href="javascript:onPaginationClick(${i})">${i}</a>
                         </li>
                     `;
             }
@@ -141,9 +170,10 @@ const displayNavigation = async (alcps) => {
         html += `
             <li class="${cpg === allpage ? 'disabled' : ''}">
                 <a
+                    id="prevpgbtn"
                     class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pr-2.5"
                     aria-label="Go to next page"
-                    ${cpg === allpage ? 'disabled' : `href="javascript:ad(${cpg + 1})"`}
+                    ${cpg === allpage ? 'disabled' : `href="javascript:onPaginationClick(${cpg + 1})"`}
                 >
                     <span>Next</span>
                     <svg
@@ -183,17 +213,70 @@ window.addEventListener('load', async () => {
     }
 });
 
-async function ad(idx) {
+// 페이지네이션 함수
+async function onPaginationClick(idx) {
     try {
         cpg = idx;
-        const alcps = await getCouponInfo();
-        const coupons = await getCouponInfoPage(idx);
+        let alcps = await getCouponInfo();
+        let coupons = await getCouponInfoPage(idx);
+
+        if (sessionStorage.getItem('searchStatus') === '검색 중'){
+
+            if (mthrdo.checked) {
+                cpkey = document.querySelector('#monthInput').value;
+            } else if (dtrdo.checked) {
+                cpkey = document.querySelector('#dateInput').value;
+            } else {
+                alert('올바른 값이 아닙니다.');
+            }
+
+            alcps = await findCouponInfo(cpkey);
+            coupons = await findCouponInfoPage(cpkey, idx);
+        }
         displayCouponInfo(coupons);
-        await displayNavigation(alcps);
+        displayNavigation(alcps);
         //console.log(coupons);
         //console.log(alcps);
     } catch (e) {
         console.error(e);
-        alert('이거아니래!');
+        alert('페이지네이션 오류');
     }
 }
+
+// 검색 버튼 이벤트
+cpschbtn.addEventListener('click', async () => {
+
+    let cpkey = "";
+    if (mthrdo.checked) {
+        cpkey = document.querySelector('#monthInput').value;
+    } else if (dtrdo.checked) {
+        cpkey = document.querySelector('#dateInput').value;
+    } else {
+        alert('올바른 값이 아닙니다.');
+    }
+
+    if (cpkey) {
+        try {
+            const alcps = await findCouponInfo(cpkey);
+            const coupons = await findCouponInfoPage(cpkey, 1);
+
+            console.log(coupons);
+            console.log(alcps);
+            displayCouponInfo(coupons);
+            displayNavigation(alcps);
+
+            sessionStorage.setItem('searchStatus', '검색 중');
+        } catch (e) {
+            console.error(e);
+            alert('할인권 목록 조회 실패!!');
+        }
+    } else {
+        alert('검색어를 입력해주세요.');
+    }
+});
+
+
+window.addEventListener('beforeunload', function() {
+    // 세션 스토리지에서 "검색 중" 삭제
+    sessionStorage.removeItem('searchStatus');
+});
