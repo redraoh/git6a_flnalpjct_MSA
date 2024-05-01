@@ -38,10 +38,12 @@ const getCouponInfo = async () => {
 };
 
 // 할인권 첫페이지 정보 조회
-const getCouponInfoPage = async () => {
-    const res = await fetch(`http://127.0.0.1:8040/coupons/1`)
+const getCouponInfoPage = async (idx) => {
+    if (idx === undefined || idx === null) idx = 1;
+    const res = await fetch(`http://127.0.0.1:8040/coupons/${idx}`)
     if (res.ok) {
         const data = await res.json()
+        //console.log(data);
         return data;
     } else {
         throw new Error('첫페이지 할인권 정보 조회 실패!');
@@ -84,77 +86,86 @@ const displayCouponInfo = (coupons) => {
     couponlist.innerHTML = html;
 };
 
+let cpg = 1;
+
 // nav test
-const displayNavigation = (alcps) => {
+const displayNavigation = async (alcps) => {
     const navuilist = document.querySelector('#navui');
 
-    let cpg = 1;
     let stpg = Math.floor((cpg - 1) / 10) * 10 + 1;
     let cnt = alcps.length;
     let allpage = Math.ceil(cnt / 10);
+    let html = '';
 
-    console.log(allpage);
-
-    let html = `
-        <li class="disabled">
-            <a
-                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pl-2.5"
-                aria-label="Go to previous page"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4"
+    if (allpage >= 1) {
+        html = `
+            <li class="${cpg === 1 ? 'disabled' : ''}">
+                <a
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pl-2.5"
+                    aria-label="Go to previous page"
+                    ${cpg === 1 ? 'disabled' : `href="javascript:ad(${cpg - 1})"`}
                 >
-                    <path d="m15 18-6-6 6-6"></path>
-                </svg>
-                <span>Previous</span>
-            </a>
-        </li>
-    `;
-    if (allpage > 1) {
-        for (let i = 0; i < allpage; i++) {
-            html += `
-                <li class="page-item active">
-                    <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
-                       href="">${i + 1}</a>
-                </li>
-            `;
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                    >
+                        <path d="m15 18-6-6 6-6"></path>
+                    </svg>
+                    <span>Previous</span>
+                </a>
+            </li>
+        `;
+        for (let i = stpg; i < stpg + 10; i++) {
+            if (i <= allpage) {
+                html += `
+                        <li id="li${i}" class="${cpg === i ? 'page-item active text-[#0075C9]' : ''}">
+                            <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                               href="javascript:ad(${i})">${i}</a>
+                        </li>
+                    `;
+            }
         }
+
+        // console.log(cpg);
+        // console.log(allpage);
+        // console.log(cpg===allpage ? 'true' : 'false');
+
+        html += `
+            <li class="${cpg === allpage ? 'disabled' : ''}">
+                <a
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pr-2.5"
+                    aria-label="Go to next page"
+                    ${cpg === allpage ? 'disabled' : `href="javascript:ad(${cpg + 1})"`}
+                >
+                    <span>Next</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                    >
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </a>
+            </li>
+        `;
     } else {
         html += ``;
     }
-    html += `
-        <li class="">
-            <a
-                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pr-2.5"
-                aria-label="Go to next page"
-            >
-                <span>Next</span>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4"
-                >
-                    <path d="m9 18 6-6-6-6"></path>
-                </svg>
-            </a>
-        </li>
-    `;
     navuilist.innerHTML = html;
 };
 
@@ -163,14 +174,26 @@ const displayNavigation = (alcps) => {
 window.addEventListener('load', async () => {
     try {
         const alcps = await getCouponInfo();
-        const coupons = await getCouponInfoPage();
+        const coupons = await getCouponInfoPage(1);
         displayCouponInfo(coupons);
-        displayNavigation(alcps);
-        console.log(coupons);
-        console.log(alcps);
+        await displayNavigation(alcps);
     } catch (e) {
         console.error(e);
         alert('할인권 목록 조회 실패!!');
     }
 });
 
+async function ad(idx) {
+    try {
+        cpg = idx;
+        const alcps = await getCouponInfo();
+        const coupons = await getCouponInfoPage(idx);
+        displayCouponInfo(coupons);
+        await displayNavigation(alcps);
+        //console.log(coupons);
+        //console.log(alcps);
+    } catch (e) {
+        console.error(e);
+        alert('이거아니래!');
+    }
+}
