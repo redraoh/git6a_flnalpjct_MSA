@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 할인권 정보 조회
 const getCouponInfo = async () => {
-    const res = await fetch(`http://127.0.0.1:8040/coupons`)
+    const res = await fetch(`http://127.0.0.1:8040/sumfind`)
     if (res.ok) {
         const data = await res.json()
         return data;
