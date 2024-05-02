@@ -17,10 +17,29 @@ router = APIRouter()
 async def index():
     return {"message": "not here"}
 
-# @app.get("/users", response_model=list[pym.User])
-# async def list_users(db:Session = Depends(get_db)):
-#     users = db.query(sqlm.User).all()
-#     return [pym.User.from_orm(p) for p in users]
+# 유저 정보 가져오기
+@router.get("/users", response_model=list[pym.User])
+async def query_user(db:Session = Depends(get_db)):
+    # oneuser = db.query(sqlm.User).all()
+    oneuser = db.query(sqlm.User.mid, sqlm.User.mname, sqlm.User.pname).all()
+
+    return [pym.User.from_orm(p) for p in oneuser]
+
+# @member_router.get('/myinfo', response_class=HTMLResponse)
+# def myinfo(req: Request):
+#     if 'm' not in req.session:
+#         return RedirectResponse(url='/login', status_code=status.HTTP_303_SEE_OTHER)
+#
+#     myinfo = MemberService.selectone_member(req.session['m'])
+#     return templates.TemplateResponse('myinfo.html',{'request': req, 'my': myinfo})
+
+
+# @staticmethod
+# def selectone_member(userid):
+#     with Session() as sess:
+#         result = sess.query(Member).filter_by(userid=userid).scalar()
+#         return result
+
 
 # 회원가입 하기
 @router.post("/users", response_model=pym.User)
