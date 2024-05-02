@@ -59,32 +59,42 @@ async def find_coupons(skey: str, cpg: int, db: Session = Depends(get_db)):
 
 
 # 전체 그룹 조회
-# @router.get("/sumfind", response_model=list[pym.Coupon])
-# async def find_coupons(db: Session = Depends(get_db)):
-#     coupons = db.query(sqlm.Coupon, func.count(sqlm.Coupon.dno).label('count')).order_by(sqlm.Coupon.dno).group_by(sqlm.Coupon.disc)
-#     print('쿠폰!')
-#     print(coupons)
-#     return [pym.Coupon.from_orm(p) for p in coupons]
-@router.get("/sumfind", response_model=list[pym.Coupon])
+@router.get("/sumfind")
 async def find_coupons(db: Session = Depends(get_db)):
     coupons = db.query(sqlm.Coupon, func.count(sqlm.Coupon.dno).label('count')) \
-        .order_by(sqlm.Coupon.dno).group_by(sqlm.Coupon.disc)
+        .filter(sqlm.Coupon.usec.like('y')) \
+        .order_by(sqlm.Coupon.disc).group_by(sqlm.Coupon.disc).all()
+    result = []
 
-    # 필요한 필드만 포함하여 Pydantic 모델로 변환
-    return [pym.Coupon(cno=p[0].cno, disc=p[0].disc, dno=p[0].dno, disc_time=p[0].disc_time, usec=p[0].usec, count=p[1]) for p in coupons]
+    for coupon, count in coupons:
+        coupon_data = {"disc": coupon.disc, "disc_time": coupon.disc_time, "count": count}
+        result.append(coupon_data)
+    return result
 
 
 # 특정 그룹 검색 조회
-@router.get("/sumfindall/{skey}", response_model=list[pym.Coupon])
+@router.get("/sumfindall/{skey}")
 async def find_coupons(skey: str, db: Session = Depends(get_db)):
-    coupons = db.query(sqlm.Coupon).filter(func.lower(sqlm.Coupon.disc_time).like('%' + skey + '%'))
-    return [pym.Coupon.from_orm(p) for p in coupons]
+    coupons = db.query(sqlm.Coupon, func.count(sqlm.Coupon.dno).label('count')) \
+            .filter(func.lower(sqlm.Coupon.disc_time).like('%' + skey + '%'), sqlm.Coupon.usec.like('y')) \
+            .order_by(sqlm.Coupon.disc).group_by(sqlm.Coupon.disc).all()
+    result = []
+
+    for coupon, count in coupons:
+        coupon_data = {"disc": coupon.disc, "disc_time": coupon.disc_time, "count": count}
+        result.append(coupon_data)
+    return result
 
 
-# 특정 그룹 검색 페이지 조회
-@router.get("/sumfindall/{skey}/{cpg}", response_model=list[pym.Coupon])
-async def find_coupons(skey: str, cpg: int, db: Session = Depends(get_db)):
-    stnum = (cpg - 1) * 10
-    coupons = db.query(sqlm.Coupon).filter(func.lower(sqlm.Coupon.disc_time).like('%' + skey + '%')).offset(
-        stnum).limit(10)
-    return [pym.Coupon.from_orm(p) for p in coupons]
+# 전체 차 조회
+@router.get("/sumfind")
+async def find_coupons(db: Session = Depends(get_db)):
+    coupons = db.query(sqlm.Coupon, func.count(sqlm.Coupon.dno).label('count')) \
+        .filter(sqlm.Coupon.usec.like('y')) \
+        .order_by(sqlm.Coupon.disc).group_by(sqlm.Coupon.disc).all()
+    result = []
+
+    for coupon, count in coupons:
+        coupon_data = {"disc": coupon.disc, "disc_time": coupon.disc_time, "count": count}
+        result.append(coupon_data)
+    return result
