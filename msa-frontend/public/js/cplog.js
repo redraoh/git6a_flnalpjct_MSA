@@ -112,9 +112,9 @@ const displayCouponInfo = (coupons) => {
     couponlist.innerHTML = html;
 };
 
-let cpg = 1;
 
 // nav test
+let cpg = 1;
 const displayNavigation = (alcps) => {
     const navuilist = document.querySelector('#navui');
 
