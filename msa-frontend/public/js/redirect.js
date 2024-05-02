@@ -1,4 +1,58 @@
 // 페이지 리디렉션 자바스크립트
+
+// 로그인 되어있지 않으면 로그인 페이지로 리디렉션
+const displayAfterLogin = () => {
+    if (!localStorage.getItem('token')) {
+        location.href = '/login.html';
+        return false; // 로그인 페이지로 리디렉션될 경우 함수에서 false를 반환
+    }
+    return true; // 로그인 상태가 유효하면 true를 반환
+};
+
+// 페이지 로드시 실행
+window.addEventListener('load', async () => {
+    try {
+        const isLoggedIn = displayAfterLogin();
+        if (isLoggedIn) { // 로그인 상태가 유효할 경우에만 실행
+            const user = await getUserInfo();
+            displayUserInfo(user);
+        }
+    } catch (e) {
+        console.error(e); // 콘솔에 에러 로그를 출력
+        alert('에러발생!!'); // 사용자에게 에러 알림
+    }
+});
+
+// get user info
+const getUserInfo = async () => {
+    const res = await fetch('http://127.0.0.1:8020/users');
+    if (res.ok) {
+        const data = await res.json();
+        return data;
+    } else {
+        throw new Error('사용자 정보 조회 실패!');
+    }
+};
+
+// 로그인 된 사용자 추출
+const displayUserInfo = (user) => {
+    const userlist = document.querySelector('#user-list');
+
+    let html = '<ul>';
+        html += `
+            <li>
+                사용자 아이디: ${u.mid},
+                사용자 이름: ${u.mname},
+            </li>
+        `;
+    html += '</ul>';
+    userlist.innerHTML = html;
+};
+
+
+
+// nav 바
+
 // 할인적용 페이지
 const PageButton1 = document.getElementById('discountPage');
 // const userid = document.querySelector('#userid');
@@ -15,7 +69,7 @@ const PageButton2 = document.getElementById('byTimePage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton2.addEventListener('click', function() {
     // 페이지를 시간대검색 페이지로 리디렉션합니다.
-    window.location.href = '#';
+    window.location.href = '/select_cars.html';
 })
 
 // 사용내역 페이지
@@ -24,7 +78,7 @@ const PageButton3 = document.getElementById('logPage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton3.addEventListener('click', function() {
     // 페이지를 사용내역 페이지로 리디렉션합니다.
-    window.location.href = './coupon';
+    window.location.href = '/coupon_log.html';
 })
 
 // 사용집계 페이지
@@ -33,7 +87,7 @@ const PageButton4 = document.getElementById('summaryPage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton4.addEventListener('click', function() {
     // 페이지를 사용내역 페이지로 리디렉션합니다.
-    window.location.href = './summary';
+    window.location.href = '/coupon_sum.html';
 })
 
 // 로그아웃 리디렉션
@@ -48,12 +102,13 @@ logoutButton.addEventListener('click', function() {
     window.location.href = '/login.html';
 })
 
-
 // 회원정보수정 페이지
-const mypageButton = document.getElementById('summaryPage');
+const mypageButton = document.getElementById('myinfo');
 
-// 버튼에 클릭 이벤트 리스너를 추가합니다.
-mypageButton.addEventListener('click', function() {
-    // 페이지를 사용내역 페이지로 리디렉션합니다.
-    window.location.href = './mypage';
-})
+if (mypageButton !== null) {
+    mypageButton.addEventListener('click', function() {
+        window.location.href = '/myinfo.html';
+    });
+} else {
+    console.error("Element with ID 'myinfo' was not found.");
+}
