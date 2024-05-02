@@ -171,12 +171,13 @@
                                     <div class="flex items-center space-x-4">
                                         <div class="flex items-center space-x-2">
                                             <div class="flex space-x-2">
-                                                <label for="cno"
+                                                <label for="cnoInput"
                                                        class="border-white min-w-24 h-10 rounded-md border border-input bg-background px-1 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                                 >차량번호</label>
                                                 <input id="cnoInput" type="text" name="search"
                                                        class="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
                                                 />
+                                                <!-- 보류
                                                 <label for="date"
                                                        class="border-white min-w-24 h-10 rounded-md border border-input bg-background px-1 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                                 >입차일자</label>
@@ -186,6 +187,7 @@
                                                         placeholder="Enter date"
                                                         type="date"
                                                 />
+                                                -->
                                                 <button
                                                         id="schbtn"
                                                         class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input hover:text-accent-foreground h-10 px-4 py-1 text-xs bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
@@ -241,78 +243,12 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody class="[&amp;_tr:last-child]:border-0">
-                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell">{{ car.cno }}</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell">{{ car.ent_time }}</td>
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell">{{ car.ent }}</td>
-                                </tr>
-                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center" colspan="3">
-                                        입차 내역이 없습니다.
-                                    </td>
-                                </tr>
+                            <tbody id="slctcartb" class="[&amp;_tr:last-child]:border-0">
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- nav start -->
-                <nav aria-label="pagination" class="mx-auto flex w-full justify-center" role="navigation">
-                    <ul class="flex flex-row items-center gap-1">
-                        <li class="disabled">
-                            <a
-                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pl-2.5"
-                                    aria-label="Go to previous page"
-                            >
-                                <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="h-4 w-4"
-                                >
-                                    <path d="m15 18-6-6 6-6"></path>
-                                </svg>
-                                <span>Previous</span>
-                            </a>
-                        </li>
-
-                        <li class="page-item active">
-                            <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
-                               href="">{{ idx }}</a>
-                        </li>
-
-                        <li class="">
-                            <a
-                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 gap-1 pr-2.5"
-                                    aria-label="Go to next page"
-                            >
-                                <span>Next</span>
-                                <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="h-4 w-4"
-                                >
-                                    <path d="m9 18 6-6-6-6"></path>
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- nav end -->
             </main>
         </div>
     </div>
