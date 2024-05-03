@@ -77,6 +77,9 @@ def authenticate(db: Session, user: pym.UserLogin):
         return None
 
     # 토큰 생성
+    #token_data = {'mid': user.mid, 'mname': user.mname}
+    #token_data = {'mid': user.mid, 'mname': dbuser.mname }
+    #token = generate_access_token(token_data)
     token = generate_access_token(user.mid)
 
     # 토큰 넘겨줌

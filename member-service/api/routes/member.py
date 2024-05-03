@@ -20,10 +20,12 @@ async def index():
 # 유저 정보 가져오기
 @router.get("/users", response_model=list[pym.User])
 async def query_user(db:Session = Depends(get_db)):
+    pass
+    return
     # oneuser = db.query(sqlm.User).all()
-    oneuser = db.query(sqlm.User.mid, sqlm.User.mname, sqlm.User.pname).all()
+    # oneuser = db.query(sqlm.User.mid, sqlm.User.mname, sqlm.User.pname).all()
 
-    return [pym.User.from_orm(p) for p in oneuser]
+    # return [pym.User.from_orm(p) for p in oneuser]
 
 # @member_router.get('/myinfo', response_class=HTMLResponse)
 # def myinfo(req: Request):
@@ -55,3 +57,8 @@ async def login_user(user: pym.UserLogin, db:Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail='로그인 실패!! - 아이디 혹은 비밀번호를 확인하세요')
 
     return token
+
+# 회원정보 수정 하기
+@router.post("/users/modify", response_model=pym.User)
+async def create_user(user: pym.UserCreate, db:Session = Depends(get_db)):
+    return auth.register(db, user)

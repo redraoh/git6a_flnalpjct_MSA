@@ -27,6 +27,8 @@ loginbtn.addEventListener('click', async (e) => {
         if (res.ok) {
             //console.log(data.access_token);
             localStorage.setItem('token', data.access_token);
+            localStorage.setItem('loginuser', userid.value);
+            //localStorage.setItem('loginname', mname.value);
             // 클라이언트에 저장하는거라 보안에 구멍이 생길 수 있음, HTTPS 접속하게 해야함
             alert('로그인 성공!!');
             window.location.href = '/discount.html';
@@ -35,7 +37,7 @@ loginbtn.addEventListener('click', async (e) => {
             console.log(data.detail || data.message); // 실패 이유 출력
         }
     } catch (error) {
-        console.error('서버와의 통신 중 문제가 발생했습니다.', error);
-        alert('서버와의 통신 중 문제가 발생했습니다.');
+        console.error('서버와의 통신 중 문제가 발생했습니다. 에러코드 1', error);
+        alert('서버와의 통신 중 문제가 발생했습니다. 에러코드 1');
     }
 });
