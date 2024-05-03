@@ -3,51 +3,52 @@
 // 로그인 되어있지 않으면 로그인 페이지로 리디렉션
 const displayAfterLogin = () => {
     if (!localStorage.getItem('token')) {
-        location.href = '/login.html';
+        window.location.href = '/login.html';
         return false; // 로그인 페이지로 리디렉션될 경우 함수에서 false를 반환
     }
     return true; // 로그인 상태가 유효하면 true를 반환
 };
+
+// get user info
+// const getUserInfo = async () => {
+//     const res = await fetch('http://127.0.0.1:8020/users');
+//     if (res.ok) {
+//         const data = await res.json();
+//         return data;
+//     } else {
+//         throw new Error('사용자 정보 조회 실패!');
+//     }
+// };
+
+// 로그인 된 사용자 추출
+// 로그인 된 사용자 추출
+const displayUserInfo = () => {
+    const userlist = document.querySelector('#user-list');
+    if (!userlist) {
+        console.error('유저리스트가 없습니다');
+        return; // 요소가 없을 경우 함수를 종료합니다.
+    }
+    const loggeduser = localStorage.getItem('loginuser');
+    let html = '<p>';
+    html += `로그인 사용자 아이디: ${loggeduser}`; // 올바른 템플릿 리터럴 구문 사용
+    html += '</p>';
+    userlist.innerHTML = html;
+};
+
 
 // 페이지 로드시 실행
 window.addEventListener('load', async () => {
     try {
         const isLoggedIn = displayAfterLogin();
         if (isLoggedIn) { // 로그인 상태가 유효할 경우에만 실행
-            const user = await getUserInfo();
-            displayUserInfo(user);
+            //const userinfo = await getUserInfo();
+            displayUserInfo();
         }
     } catch (e) {
-        console.error(e); // 콘솔에 에러 로그를 출력
-        alert('에러발생!!'); // 사용자에게 에러 알림
+        console.error(e);
+        alert('페이지 로드 에러발생!!');
     }
 });
-
-// get user info
-const getUserInfo = async () => {
-    const res = await fetch('http://127.0.0.1:8020/users');
-    if (res.ok) {
-        const data = await res.json();
-        return data;
-    } else {
-        throw new Error('사용자 정보 조회 실패!');
-    }
-};
-
-// 로그인 된 사용자 추출
-const displayUserInfo = (user) => {
-    const userlist = document.querySelector('#user-list');
-
-    let html = '<ul>';
-        html += `
-            <li>
-                사용자 아이디: ${u.mid},
-                사용자 이름: ${u.mname},
-            </li>
-        `;
-    html += '</ul>';
-    userlist.innerHTML = html;
-};
 
 
 
