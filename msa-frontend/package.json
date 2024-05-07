@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node app.js",
     "build-css": "tailwindcss -i ./public/css/style.css -o ./public/css/output.css",
     "dev": "tailwindcss -i ./public/css/style.css -o ./public/css/output.css --watch"
   },
