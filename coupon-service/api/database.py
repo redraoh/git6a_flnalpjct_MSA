@@ -1,6 +1,5 @@
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
-
 from api.models.coupon import Base
 
 db_url = 'sqlite:///coupon.db'
