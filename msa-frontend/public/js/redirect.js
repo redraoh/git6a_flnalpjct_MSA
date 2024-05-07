@@ -23,17 +23,33 @@ const displayAfterLogin = () => {
 // 로그인 된 사용자 추출
 const displayUserInfo = () => {
     const userlist = document.querySelector('#user-list');
+    const loguser = document.querySelector('#loguser');
     if (!userlist) {
         console.error('유저리스트가 없습니다');
         return; // 요소가 없을 경우 함수를 종료합니다.
     }
     const loggeduser = localStorage.getItem('loginuser');
     let html = '<p>';
-    html += `로그인 사용자 아이디: ${loggeduser}`; // 올바른 템플릿 리터럴 구문 사용
+    html += `${loggeduser}`; // 올바른 템플릿 리터럴 구문 사용
     html += '</p>';
     userlist.innerHTML = html;
+    if (loguser) {
+        loguser.value = loggeduser;
+    }
 };
 
+// 로그인 된 사용자 추출 2
+const displayUserInfo2 = () => {
+    if (!userlist) {
+        console.error('유저리스트가 없습니다');
+        return; // 요소가 없을 경우 함수를 종료합니다.
+    }
+    const loggeduser = localStorage.getItem('loginuser');
+    let html = '<p>';
+    html += `${loggeduser}`; // 올바른 템플릿 리터럴 구문 사용
+    html += '</p>';
+    loguser.innerHTML = html;
+};
 
 // 페이지 로드시 실행
 window.addEventListener('load', async () => {
