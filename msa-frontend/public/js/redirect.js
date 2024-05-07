@@ -21,7 +21,6 @@ const displayAfterLogin = () => {
 // };
 
 // 로그인 된 사용자 추출
-// 로그인 된 사용자 추출
 const displayUserInfo = () => {
     const userlist = document.querySelector('#user-list');
     if (!userlist) {
