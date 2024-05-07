@@ -207,12 +207,8 @@
                                                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 font-bold"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                                <path d="M6 18h8"></path>
-                                                <path d="M3 22h18"></path>
-                                                <path d="M14 22a7 7 0 1 0 0-14h-1"></path>
-                                                <path d="M9 14h2"></path>
-                                                <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path>
-                                                <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path>
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                             </svg>
                                             검색
                                         </button>
@@ -228,7 +224,8 @@
                     <thead class="[&amp;_tr]:border-b">
                     <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                         <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[25%]">
-                            <span class="tablemth">사용일</span><span class="tabledt hid">사용월</span>
+                            <span class="tablemth">사용월</span>
+                            <span class="tabledt hid">사용일</span>
                         </th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 max-w-[25%]">
                             할인종류
@@ -257,8 +254,8 @@
             </nav>
             <!-- 내비 끝 nav end -->
 
-            <!-- 여력이 된다면 -->
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-24 hid">
+            <!-- 여력이 된다면 / 노출시 hidden 클래스 삭제 -->
+            <button class="hidden inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-24 hid">
                 EXCEL
             </button>
         </main>
