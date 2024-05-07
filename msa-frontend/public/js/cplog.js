@@ -88,10 +88,10 @@ const displayCouponInfo = (coupons) => {
                     ${c.disc_time}
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                    ${c.disc}
+                    ${c.cno}
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                    유료
+                    ${c.disc}
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                     ${c.usec}
