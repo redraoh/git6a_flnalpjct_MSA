@@ -1,7 +1,6 @@
 import sqlalchemy
 
 from sqlalchemy.orm import sessionmaker
-from api.models.discount import Base
 
 db_url = 'sqlite:///car.db'
 
