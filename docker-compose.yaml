@@ -2,7 +2,7 @@ version: "3.8"
 services:
   frontendapp:
     build:
-      context: ./msa-frontend
+      context: ./git6a_flnalpjct_MSA/msa-frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
@@ -10,7 +10,7 @@ services:
 
   couponapp:
     build:
-      context: ./coupon-service
+      context: ./git6a_flnalpjct_MSA/coupon-service
       dockerfile: Dockerfile
     ports:
       - "8040:8040"
@@ -18,7 +18,7 @@ services:
 
   discountapp:
     build:
-      context: ./discount-service
+      context: ./git6a_flnalpjct_MSA/discount-service
       dockerfile: Dockerfile
     ports:
       - "8050:8050"
@@ -26,7 +26,7 @@ services:
 
   memberapp:
     build:
-      context: ./member-service
+      context: ./git6a_flnalpjct_MSA/member-service
       dockerfile: Dockerfile
     ports:
       - "8030:8030"
