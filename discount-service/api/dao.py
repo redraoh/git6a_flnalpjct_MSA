@@ -1,6 +1,7 @@
+from sqlalchemy.exc import SQLAlchemyError
 from api.models.discount import Car
 from database import Session
-from sqlalchemy.exc import SQLAlchemyError
+
 
 class CarService():
     @classmethod

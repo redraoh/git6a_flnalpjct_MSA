@@ -1,12 +1,13 @@
-from fastapi import APIRouter, HTTPException
-from starlette.responses import JSONResponse
-from dao import CarService
-from fastapi.requests import Request
-from api.schema.discount import Car
-from fastapi.responses import HTMLResponse
 from typing import List
+
+from api.schema.discount import Car
+from api.dao import CarService
+from api.database import db_startup
+from fastapi import APIRouter, HTTPException
+from fastapi.requests import Request
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from database import db_startup
+from starlette.responses import JSONResponse
 
 templates = Jinja2Templates(directory='/views/templates')
 
