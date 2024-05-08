@@ -8,7 +8,7 @@ WORKDIR /app
 # packge-lock.json : npm ci --only=production (추천)
 COPY package*.json .
 
-RUN npm install
+RUN npm install  --save 
 # RUN npm ci --only=production
 
 COPY . .
