@@ -11,7 +11,7 @@ ENV PYTHONPATH=/app
 
 EXPOSE 8050
 
-VOLUME /app/car.db
+VOLUME /app/cars.db
 
 # CMD ["uvicorn","main:app","--host","0.0.0.0","--port","8000"]
 CMD ["python","api/main.py"]
