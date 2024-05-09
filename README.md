@@ -2,4 +2,3 @@
 
 * python3.9
 * node.js
-* node.js
