@@ -18,10 +18,10 @@ async def index():
     return {"message": "not here"}
 
 # 유저 정보 가져오기
-@router.get("/users", response_model=list[pym.User])
-async def query_user(db:Session = Depends(get_db)):
-    pass
-    return
+# @router.get("/users", response_model=list[pym.User])
+# async def query_user(db:Session = Depends(get_db)):
+#     pass
+#     return
     # oneuser = db.query(sqlm.User).all()
     # oneuser = db.query(sqlm.User.mid, sqlm.User.mname, sqlm.User.pname).all()
 
