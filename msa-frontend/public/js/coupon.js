@@ -46,7 +46,7 @@ regbtn.addEventListener('click', async () => {
     const disc = document.querySelector('#regdisc');
 
     try {
-        const res = await fetch('http://54.180.127.84:8040/coupons',
+        const res = await fetch('http://43.203.182.213:8040/coupons',
             {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
