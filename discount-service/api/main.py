@@ -11,7 +11,9 @@ instrumentator.instrument(app).expose(app)
 # CORS 설정
 origins = [
     "http://43.203.182.213:32321",  # 허용할 프론트엔드 도메인
-    "http://43.203.182.213:32321"
+    "http://43.203.182.213:32321",
+    "http://43.203.182.213:30742"
+
 ]
 
 app.add_middleware(
