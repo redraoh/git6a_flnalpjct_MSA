@@ -26,7 +26,7 @@ dtrdo.addEventListener('change', () => {
 
 // 할인권 정보 전체 조회
 const getSumCouponInfo = async () => {
-    const res = await fetch(`http://43.203.182.213:8040/sumfind`)
+    const res = await fetch(`http://43.203.182.213:32322/sumfind`)
     if (res.ok) {
         const data = await res.json()
         return data;
