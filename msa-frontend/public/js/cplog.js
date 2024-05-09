@@ -66,7 +66,7 @@ const findCouponInfoPage = async (skey, idx) => {
 // 할인권 첫페이지 정보 조회
 const getCouponInfoPage = async (idx) => {
     if (idx === undefined || idx === null) idx = 1;
-    const res = await fetch(`http://43.203.182.213:8040/coupons/${idx}`)
+    const res = await fetch(`http://43.203.182.213:32322/coupons/${idx}`)
     if (res.ok) {
         const data = await res.json()
         //console.log(data);

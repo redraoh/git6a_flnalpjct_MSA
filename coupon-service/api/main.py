@@ -15,8 +15,8 @@ templates = Jinja2Templates(directory='/views/templates')
 
 # CORS 설정
 origins = [
-    "http://54.180.127.84/:3000",  # 허용할 프론트엔드 도메인
-    "http://54.180.127.84/:3000"
+    "http://43.203.182.213:32321",  # 허용할 프론트엔드 도메인
+    "http://43.203.182.213:32321"
 ]
 
 app.add_middleware(
