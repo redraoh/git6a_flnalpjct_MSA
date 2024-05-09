@@ -20,7 +20,7 @@ regbtn.addEventListener('click', async (event) => {
     const data = await res.json();
     if (res.ok) {
         alert('회원등록 성공!!');
-        window.location.href = '/login.html';
+        window.location.href = '/login/login.html';
     } else {
         alert('회원등록실패!!');
         console.log(data.detail);
