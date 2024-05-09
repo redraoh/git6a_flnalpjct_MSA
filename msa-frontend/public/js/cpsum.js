@@ -26,7 +26,7 @@ dtrdo.addEventListener('change', () => {
 
 // 할인권 정보 전체 조회
 const getSumCouponInfo = async () => {
-    const res = await fetch(`http://127.0.0.1:8040/sumfind`)
+    const res = await fetch(`http://54.180.127.84:8040/sumfind`)
     if (res.ok) {
         const data = await res.json()
         return data;
@@ -37,7 +37,7 @@ const getSumCouponInfo = async () => {
 
 // 할인권 정보 검색 조회
 const findSumCouponInfo = async (skey) => {
-    const res = await fetch(`http://127.0.0.1:8040/sumfindall/${skey}`)
+    const res = await fetch(`http://54.180.127.84:8040/sumfindall/${skey}`)
     if (res.ok) {
         const data = await res.json()
         return data;

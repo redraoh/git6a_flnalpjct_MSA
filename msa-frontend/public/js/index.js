@@ -1,7 +1,7 @@
 
 
 const getProductInfo = async () => {
-  const res = await fetch('http://127.0.0.1:8000/products');
+  const res = await fetch('http://54.180.127.84:8000/products');
   if (res.ok) {
       const data = await res.json();
       return data;

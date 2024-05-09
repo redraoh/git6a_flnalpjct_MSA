@@ -1,12 +1,11 @@
 from datetime import datetime
 
-from fastapi import APIRouter, Depends
-from sqlalchemy import func
-from sqlalchemy.orm import Session
-
 import api.models.coupon as sqlm
 import api.schema.coupon as pym
 from api.database import get_db
+from fastapi import APIRouter, Depends
+from sqlalchemy import func
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
