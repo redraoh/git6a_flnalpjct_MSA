@@ -76,7 +76,7 @@ const PageButton1 = document.getElementById('discountPage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton1.addEventListener('click', function() {
     // 페이지를 사용내역 페이지로 리디렉션합니다.
-    window.location.href = '/discount.html';
+    window.location.href = '/login/discount.html';
 })
 
 // 시간대검색 페이지
@@ -85,7 +85,7 @@ const PageButton2 = document.getElementById('byTimePage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton2.addEventListener('click', function() {
     // 페이지를 시간대검색 페이지로 리디렉션합니다.
-    window.location.href = '/select_cars.html';
+    window.location.href = '/login/select_cars.html';
 })
 
 // 사용내역 페이지
@@ -94,7 +94,7 @@ const PageButton3 = document.getElementById('logPage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton3.addEventListener('click', function() {
     // 페이지를 사용내역 페이지로 리디렉션합니다.
-    window.location.href = '/coupon_log.html';
+    window.location.href = '/login/coupon_log.html';
 })
 
 // 사용집계 페이지
@@ -103,7 +103,7 @@ const PageButton4 = document.getElementById('summaryPage');
 // 버튼에 클릭 이벤트 리스너를 추가합니다.
 PageButton4.addEventListener('click', function() {
     // 페이지를 사용내역 페이지로 리디렉션합니다.
-    window.location.href = '/coupon_sum.html';
+    window.location.href = '/login/coupon_sum.html';
 })
 
 // 로그아웃 리디렉션
@@ -115,7 +115,7 @@ logoutButton.addEventListener('click', function() {
     //window.location.href = './logout';
     localStorage.removeItem('token');
     //location.href = '/user.html';
-    window.location.href = '/login.html';
+    window.location.href = '/login/login.html';
 })
 
 // 회원정보수정 페이지
@@ -123,7 +123,7 @@ const mypageButton = document.getElementById('myinfo');
 
 if (mypageButton !== null) {
     mypageButton.addEventListener('click', function() {
-        window.location.href = '/myinfo.html';
+        window.location.href = '/login/myinfo.html';
     });
 } else {
     console.error("Element with ID 'myinfo' was not found.");
