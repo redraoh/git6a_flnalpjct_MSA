@@ -37,7 +37,7 @@ const getSumCouponInfo = async () => {
 
 // 할인권 정보 검색 조회
 const findSumCouponInfo = async (skey) => {
-    const res = await fetch(`http://43.203.182.213:8040/sumfindall/${skey}`)
+    const res = await fetch(`http://43.203.182.213:32322/sumfindall/${skey}`)
     if (res.ok) {
         const data = await res.json()
         return data;
