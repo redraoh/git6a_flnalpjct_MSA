@@ -1,7 +1,7 @@
 const regbtn = document.querySelector('#regbtn');
 
 const getCouponInfo = async () => {
-    const res = await fetch(`http://127.0.0.1:8040/coupons`)
+    const res = await fetch(`http://54.180.127.84/:8040/coupons`)
     if (res.ok) {
         const data = await res.json()
         return data;
@@ -46,7 +46,7 @@ regbtn.addEventListener('click', async () => {
     const disc = document.querySelector('#regdisc');
 
     try {
-        const res = await fetch('http://127.0.0.1:8040/coupons',
+        const res = await fetch('http://54.180.127.84:8040/coupons',
             {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
