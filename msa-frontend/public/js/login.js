@@ -31,7 +31,7 @@ loginbtn.addEventListener('click', async (e) => {
             //localStorage.setItem('loginname', mname.value);
             // 클라이언트에 저장하는거라 보안에 구멍이 생길 수 있음, HTTPS 접속하게 해야함
             alert('로그인 성공!!');
-            window.location.href = '/discount.html';
+            window.location.href = '/login/discount.html';
         } else {
             alert('로그인에 실패하였습니다. 아이디 혹은 비밀번호를 확인하세요.');
             console.log(data.detail || data.message); // 실패 이유 출력
