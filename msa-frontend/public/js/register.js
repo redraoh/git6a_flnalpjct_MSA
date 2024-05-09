@@ -11,7 +11,7 @@ regbtn.addEventListener('click', async (event) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            //mid: userid.value.trim(), // 수정된 부분
+            mid: userid.value.trim(), // 수정된 부분
             mpwd: passwd.value.trim(), // 수정된 부분
             mname: mname.value,
             pname: pname.value
