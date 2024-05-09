@@ -1,13 +1,13 @@
 // 페이지 리디렉션 자바스크립트
 
 // 로그인 되어있지 않으면 로그인 페이지로 리디렉션
-const displayAfterLogin = () => {
-    if (!localStorage.getItem('token')) {
-        window.location.href = '/login.html';
-        return false; // 로그인 페이지로 리디렉션될 경우 함수에서 false를 반환
-    }
-    return true; // 로그인 상태가 유효하면 true를 반환
-};
+//const displayAfterLogin = () => {
+//    if (!localStorage.getItem('token')) {
+//        window.location.href = '/login.html';
+//        return false; // 로그인 페이지로 리디렉션될 경우 함수에서 false를 반환
+//    }
+//    return true; // 로그인 상태가 유효하면 true를 반환
+//};
 
 // get user info
 // const getUserInfo = async () => {
