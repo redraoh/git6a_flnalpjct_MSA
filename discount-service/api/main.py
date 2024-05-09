@@ -2,8 +2,11 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.routes import discount
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI()
+instrumentator = Instrumentator()
+instrumentator.instrument(app).expose(app)
 
 # CORS 설정
 origins = [

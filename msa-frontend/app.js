@@ -2,8 +2,11 @@ var express = require('express');
 var path = require('path');
 var nunjucks = require('nunjucks');  // Nunjucks를 추가합니다.
 var port = 3000
+const promBundle = require('express-prom-bundle');
+const metricsMiddleware = promBundle({includeMethod: true, includePath: true});
 
 var app = express();
+app.use(metricsMiddleware);
 
 // Nunjucks 템플릿 엔진 설정
 nunjucks.configure('views', { // 'views'는 Nunjucks 템플릿 파일들이 위치할 폴더입니다.

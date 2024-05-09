@@ -3,10 +3,13 @@ from api.routes import coupon
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
+from prometheus_fastapi_instrumentator import Instrumentator
 
 import database as sess
 
 app = FastAPI()
+instrumentator = Instrumentator()
+instrumentator.instrument(app).expose(app)
 
 templates = Jinja2Templates(directory='/views/templates')
 
