@@ -1,0 +1,6 @@
+---
+- name: Join MicroK8s cluster as worker node
+  hosts: kubeworker
+  tasks:
+    - name: Run shell command to join MicroK8s cluster
+      shell: ""

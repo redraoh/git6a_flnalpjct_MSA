@@ -1,0 +1,27 @@
+kube:
+  hosts:
+    54.180.160.143:
+      ansible_user: ubuntu
+    3.35.132.175:
+      ansible_user: ubuntu
+    13.125.228.121:
+      ansible_user: ubuntu
+    43.203.182.213:
+      ansible_user: ubuntu
+
+kubemaster:
+  hosts:
+    54.180.160.143:
+      ansible_user: ubuntu
+
+monitoring:
+  hosts:
+    52.78.192.179:
+      ansible_user: ubuntu
+
+DB:
+  hosts:
+    13.125.24.71:
+      ansible_user: ubuntu
+    3.34.138.34:
+      ansible_user: ubuntu
