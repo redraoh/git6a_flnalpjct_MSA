@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Bastion_Host_Terraform
+
+Resources:
+  BastionHost:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: ami-0d3d9b94632ba1e57
+      InstanceType: t2.small
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          # 패키지 업데이트 및 종속성 설치
+          sudo apt-get update
+          sudo apt-get install -y gnupg software-properties-common curl
+          
+          sudo timedatectl set-timezone Asia/Seoul
+
+          # HashiCorp GPG 키 추가
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+          # HashiCorp 리포지토리 추가
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+          # 패키지 다시 업데이트
+          sudo apt-get update
+
+          # Terraform 설치
+          sudo apt-get install -y terraform
+
+          # Terraform 설치 확인
+          terraform --version
+
+      Tags:
+        - Key: Name
+          Value: Bastion_Host_Terraform
+      KeyName: MyKeyPair03

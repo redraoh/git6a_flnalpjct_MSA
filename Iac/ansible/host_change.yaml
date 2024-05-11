@@ -1,0 +1,15 @@
+---
+- name: Modify /etc/hosts file
+  hosts: kube
+  become: yes
+  tasks:
+    - name: Add entries to /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ item }}"
+        insertafter: "^127.0.0.1"
+      loop:
+        - "54.180.160.143 master"
+        - "3.35.132.175 worker01"
+        - "13.125.228.121 worker02"
+        - "43.203.182.213 worker03"

@@ -1,0 +1,46 @@
+User
+
+pipeline {
+    agent { label 'agent' }
+
+    environment {
+        DOCKER_IMAGE_OWNER = 'seokhyeonk'
+        DOCKER_IMAGE_TAG = 'latest'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                sh '''
+                git clone https://github.com/SEOKHYEONKIM0523/git6a_flnalpjct_MSA.git
+                '''
+            }
+        }
+
+        stage('Docker Image Build') {
+            steps {
+                sh '''
+                cd git6a_flnalpjct_MSA
+                docker build -t ${DOCKER_IMAGE_OWNER}/frontendapp:${DOCKER_IMAGE_TAG} ./msa-frontend
+                docker build -t ${DOCKER_IMAGE_OWNER}/couponapp:${DOCKER_IMAGE_TAG} ./coupon-service
+                docker build -t ${DOCKER_IMAGE_OWNER}/memberapp:${DOCKER_IMAGE_TAG} ./member-service
+                docker build -t ${DOCKER_IMAGE_OWNER}/discount:${DOCKER_IMAGE_TAG} ./discount-service
+                '''
+            }
+        }
+
+    stage('Docker Image Push') {
+            steps {
+                withDockerRegistry([credentialsId: 'docker-hub-login', url: "https://index.docker.io/v1/"]) {
+                    sh '''
+                    docker push ${DOCKER_IMAGE_OWNER}/frontendapp:${DOCKER_IMAGE_TAG}
+                    docker push ${DOCKER_IMAGE_OWNER}/couponapp:${DOCKER_IMAGE_TAG}
+                    docker push ${DOCKER_IMAGE_OWNER}/memberapp:${DOCKER_IMAGE_TAG}
+                    docker push ${DOCKER_IMAGE_OWNER}/discount:${DOCKER_IMAGE_TAG}
+                    '''
+                }
+
+            }
+        }
+    }
+}

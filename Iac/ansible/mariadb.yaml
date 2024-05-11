@@ -1,0 +1,70 @@
+---
+- name: install mariadb 10.6
+  hosts: DB
+  become: true
+
+  vars:
+    mariadb_root_passwd: abc123xyz
+    mariadb_databases:
+      - name: car
+        state: present
+    mariadb_users:
+      - name: abc123
+        password: 987xyz
+        priv: "clouds2024.*:ALL"
+        state: present
+
+  tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
+
+    - name: install MariaDB 10.6 repo key
+      apt_key:
+        url: "https://mariadb.org/mariadb_release_signing_key.asc"
+        state: present
+
+    - name: add MariaDB 10.6 rep
+      apt_repository:
+        repo: "deb [arch=amd64] https://mariadb.mirror.liquidtelecom.com/repo/10.6/ubuntu {{ ansible_distribution_release }} main.tf"
+        state: present
+
+
+    - name: install MariaDB 10.6
+      apt:
+        name: mariadb-server-10.6
+        state: present
+
+
+    - name: start and enable MariaDB service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+
+    - name: set root password
+      shell: |
+        mysql -e "UPDATE mysql.global_priv SET priv=json_set(priv, '$.plugin', 'mysql_native_password','$.authentication_string', PASSWORD('{{ mariadb_root_passwd }}')) WHERE User='root'; FLUSH PRIVILEGES;"
+
+
+    - name: create database clouds2024
+      mysql_db:
+        name: clouds2024
+        login_user: root
+        login_password: "{{ mariadb_root_passwd }}"
+        state: present
+
+    - name: add user (clouds2024) to MariaDB
+      mysql_user:
+        name: "{{ item.name }}"
+        password: "{{ item.password }}"
+        priv: "{{ item.priv }}"
+        state: "{{ item.state | default('present') }}"
+        login_user: root
+        login_password: "{{ mariadb_root_passwd }}"
+      loop: "{{ mariadb_users }}"
+
+
+
+

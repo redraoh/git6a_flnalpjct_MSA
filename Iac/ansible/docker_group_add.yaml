@@ -1,0 +1,29 @@
+- name: Docker Setup
+  hosts: monitoring
+  become: yes
+  tasks:
+    - name: Add Docker group and current user
+      group:
+        name: docker
+        state: present
+      become: yes
+
+    - name: Add current user to Docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+      become: yes
+
+
+    - name: Enable Docker service
+      systemd:
+        name: docker.service
+        enabled: yes
+      become: yes
+
+    - name: Enable Containerd service
+      systemd:
+        name: containerd.service
+        enabled: yes
+      become: yes
